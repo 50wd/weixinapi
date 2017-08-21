@@ -1,9 +1,11 @@
 <?php namespace Wlkj\WeixinApi;
 
+
 class WeixinApi
 {
 	public $appid	  = 'wxbcfaa471bb9a3957';
 	public $appsr	  = 'c2b10dab4ef8782ab2d82a1bcb44419d';
+	public $dir 	  = '..\\storage\\';
 	public $timeout   = 5;
 	public $interval  = 5400;	// 更新间隔时间
 	//public $interval  = 1;	// 更新间隔时间
@@ -13,7 +15,7 @@ class WeixinApi
 	// 参数：$url  - 请求链接URL
 	public function curl_get($url)
 	{		
-		$ch = curl_init();		
+		$ch = curl_init();	
 		curl_setopt_array($ch,[
 					CURLOPT_URL 			=> $url,					
 					CURLOPT_TIMEOUT 		=> $this->timeout,
@@ -32,7 +34,7 @@ class WeixinApi
 	// 获取微信公众号 access_token		
 	public function getAccess()
 	{		
-		$file 	= "weixin-access_token.txt";
+		$file 	= $this->dir."weixin-access_token.txt";
 		$fp 	= fopen($file,"a+");
 		$result = null;
 		if(flock($fp,LOCK_EX)){														
@@ -75,7 +77,7 @@ class WeixinApi
         if(empty($access_token)) $access_token	= $this->getAccess();
 
         // 2.获取ticket        
-        $file 	= "weixin-ticket.txt";
+        $file 	= $this->dir."weixin-ticket.txt";
 		$fp 	= fopen($file,"a+");
 		$result = null;
 		if(flock($fp,LOCK_EX)){														
